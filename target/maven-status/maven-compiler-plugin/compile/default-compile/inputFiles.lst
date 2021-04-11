@@ -1,6 +1,7 @@
 /home/nguyencongluat/Documents/IT4409_20202/Weekly/Week_7/Ex1/src/main/java/controller/BookServlet.java
 /home/nguyencongluat/Documents/IT4409_20202/Weekly/Week_7/Ex1/src/main/java/com/java/ex1/resources/JavaEE8Resource.java
 /home/nguyencongluat/Documents/IT4409_20202/Weekly/Week_7/Ex1/src/main/java/dao/BookDAO.java
+/home/nguyencongluat/Documents/IT4409_20202/Weekly/Week_7/Ex1/src/main/java/controller/LogoutServlet.java
 /home/nguyencongluat/Documents/IT4409_20202/Weekly/Week_7/Ex1/src/main/java/model/User.java
 /home/nguyencongluat/Documents/IT4409_20202/Weekly/Week_7/Ex1/src/main/java/model/Book.java
 /home/nguyencongluat/Documents/IT4409_20202/Weekly/Week_7/Ex1/src/main/java/controller/UserServlet.java

@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Book;
 
 /**
@@ -39,6 +40,12 @@ public class BookServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        request.setAttribute("user", session.getAttribute("user"));
         String action;
         action = request.getParameter("action");
         if (action == null) {
@@ -53,6 +60,9 @@ public class BookServlet extends HttpServlet {
                 break;
             case "delete":
                 deleteBook(request, response);
+                break;
+            case "search":
+                searchBooks(request, response);
                 break;
             default:
                 listBooks(request, response);
@@ -70,6 +80,12 @@ public class BookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        request.setAttribute("user", session.getAttribute("user"));
         String action;
         action = request.getParameter("action");
         if (action == null) {
@@ -102,6 +118,23 @@ public class BookServlet extends HttpServlet {
         try {
             books = new BookDAO().selectAllBooks();
         } catch (ClassNotFoundException | SQLException | NamingException ex) {
+            Logger.getLogger(BookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("books", books);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("books/list.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(BookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void searchBooks(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<Book> books = null;
+        String key = request.getParameter("key");
+        try {
+            books = new BookDAO().searchBook(key);
+        } catch (SQLException | NamingException ex) {
             Logger.getLogger(BookServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         request.setAttribute("books", books);

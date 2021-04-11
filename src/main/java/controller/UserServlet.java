@@ -24,6 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import model.Book;
 import model.User;
@@ -51,7 +52,12 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            response.sendRedirect("books");
+            return;
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -66,6 +72,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
         try {
             login(request, response);
         } catch (NamingException | SQLException | ClassNotFoundException ex) {
@@ -90,10 +97,12 @@ public class UserServlet extends HttpServlet {
         userDAO = new UserDAO(dataSource);
         User user = userDAO.selectUser(username);
         boolean isLogin = user.comparePassword(password);
-        System.out.println("CPw: " + isLogin);
         if (isLogin) {
+            HttpSession session = request.getSession();
+            session.setAttribute("user", username);
             response.sendRedirect(request.getContextPath() + "/books");
         } else {
+            request.setAttribute("error", "Username or Password invalid!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
             dispatcher.forward(request, response);
         }

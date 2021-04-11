@@ -6,3 +6,4 @@ model/User.class
 controller/UserServlet.class
 dao/BookDAO.class
 controller/BookServlet.class
+controller/LogoutServlet.class

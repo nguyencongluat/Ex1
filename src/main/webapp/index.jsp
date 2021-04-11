@@ -5,15 +5,22 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
+    <c:if test="${user != null}">
+        <c:redirect url="./login"/>
+    </c:if>
     <%@include file="books/head.html" %>
     <body>
-        <%@include file="books/header.html" %>
+        <%@include file="books/header.jsp" %>
         <br>
         <br>
         <br>
-
+        
+        <c:if test="${error != null}">
+            <div style="color: red; text-align: center">${error}</div>
+        </c:if>
         <form action="./login" method="POST" style="width: 500px; margin: auto">
             <div class="form-group">
               <label for="username">Username</label>

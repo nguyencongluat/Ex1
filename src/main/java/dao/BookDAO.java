@@ -15,7 +15,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import model.Book;
-import model.User;
 
 /**
  *
@@ -45,7 +44,6 @@ public class BookDAO {
     /**
      *
      * @param id
-     * @param username
      * @return
      * @throws java.lang.ClassNotFoundException
      * @throws java.sql.SQLException
@@ -59,7 +57,6 @@ public class BookDAO {
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BOOK_BY_ID);) {
             preparedStatement.setString(1, id.toString());
-            System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -73,6 +70,7 @@ public class BookDAO {
         } catch (SQLException e) {
             printSQLException(e);
         }
+        connection.close();
         return book;
     }
     
@@ -97,6 +95,7 @@ public class BookDAO {
         } catch (SQLException e) {
             printSQLException(e);
         }
+        connection.close();
         return books;
     }
     
@@ -108,9 +107,35 @@ public class BookDAO {
             preparedStatement.setInt(3, book.getPrice());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
+            
+            
         } catch (SQLException e) {
             printSQLException(e);
         }
+        connection.close();
+    }
+    
+    public ArrayList<Book> searchBook(String key) throws SQLException, NamingException {
+        getConnection();
+        String search_query = "select * from book where name LIKE '%" + key + "%' or publisher LIKE '%" + key + "%';";
+        ArrayList<Book> books = new ArrayList<Book>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(search_query)) {
+            
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                String name = rs.getString("name");
+                String publisher = rs.getString("publisher");
+                Integer price = rs.getInt("price");
+                books.add(new Book(id, name, publisher, price));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        connection.close();
+        return books;
     }
 
     private void printSQLException(SQLException ex) {
@@ -136,6 +161,7 @@ public class BookDAO {
             statement.setInt(1, id);
             rowDeleted = statement.executeUpdate() > 0;
         }
+        connection.close();
         return rowDeleted;
     }
 
@@ -150,6 +176,7 @@ public class BookDAO {
 
             rowUpdated = statement.executeUpdate() > 0;
         }
+        connection.close();
         return rowUpdated;
     }
 }

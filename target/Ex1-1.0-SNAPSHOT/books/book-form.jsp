@@ -13,7 +13,7 @@
 
         <body>
 
-            <%@include file="header.html" %>
+            <%@include file="header.jsp" %>
             <br>
             <div class="container col-md-5">
                 <div class="card">
@@ -49,7 +49,7 @@
                         </fieldset>
 
                         <fieldset class="form-group">
-                            <label>Book Price</label> <input type="number" value="<c:out value='${book.price}' />" class="form-control" name="price">
+                            <label>Book Price (VNĐ)</label> <input type="number" min='1' value="<c:out value='${book.price}' />" class="form-control" name="price">
                         </fieldset>
 
                         <button type="submit" class="btn btn-success">Save</button>

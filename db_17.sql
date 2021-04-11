@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 11/04/2021 18:41:28
+ Date: 11/04/2021 21:54:40
 */
 
 SET NAMES utf8mb4;
@@ -23,8 +23,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `publisher` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `publisher` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `price` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 );
@@ -32,8 +32,10 @@ CREATE TABLE `book`  (
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES (2, 'english', 'test 1', 100);
-INSERT INTO `book` VALUES (3, 'Vip', 'basdhb', 12000);
+INSERT INTO `book` VALUES (4, 'Harry Potter and the Sorcerer\'s Stone, Book 1, ', ' Pottermore Publishing, P', 10000000);
+INSERT INTO `book` VALUES (5, 'From Blood and Ash', 'Jennifer L. Armentrout ', 1000000);
+INSERT INTO `book` VALUES (6, 'The Women of the Bible Speak: The Wisdom of 16 Women and Their Lessons for Today', 'Shannon Bream', 23666666);
+INSERT INTO `book` VALUES (7, 'Faucian Bargain: The Most Powerful and Dangerous Bureaucrat in American History', 'Steve Deace, Todd Erzen ', 3000000);
 
 -- ----------------------------
 -- Table structure for user
@@ -48,6 +50,6 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('test', 'test');
+INSERT INTO `user` VALUES ('test123', 'test123');
 
 SET FOREIGN_KEY_CHECKS = 1;

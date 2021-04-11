@@ -6,13 +6,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
  <html>
 
      <%@include file="head.html" %>
 
         <body>
 
-            <%@include file="header.html" %>
+            <%@include file="header.jsp" %>
             <br>
 
             <div class="row">
@@ -33,7 +34,7 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Publisher</th>
-                                <th>Price</th>
+                                <th>Price (VNĐ)</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -52,7 +53,8 @@
                                         <c:out value="${book.publisher}" />
                                     </td>
                                     <td>
-                                        <c:out value="${book.price}" />
+                                        <fmt:setLocale value = "nv_VN"/>
+                                        <fmt:formatNumber value = "${book.price}" type = "currency"/>
                                     </td>
                                     <td><a href="books?action=edit&id=<c:out value='${book.id}' />">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="books?action=delete&id=<c:out value='${book.id}' />">Delete</a></td>
                                 </tr>
