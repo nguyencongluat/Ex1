@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 11/04/2021 07:33:19
+ Date: 11/04/2021 18:41:28
 */
 
 SET NAMES utf8mb4;
@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book`  (
-  `id` int(0) NOT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `publisher` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `price` int(0) NULL DEFAULT NULL,
@@ -32,7 +32,8 @@ CREATE TABLE `book`  (
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES (1, 'test', 'test', 10);
+INSERT INTO `book` VALUES (2, 'english', 'test 1', 100);
+INSERT INTO `book` VALUES (3, 'Vip', 'basdhb', 12000);
 
 -- ----------------------------
 -- Table structure for user

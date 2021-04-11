@@ -84,6 +84,10 @@ public class User implements Serializable {
         }
         return true;
     }
+    
+    public boolean comparePassword(String password) {
+        return this.password.equals(password);
+    }
 
     @Override
     public String toString() {

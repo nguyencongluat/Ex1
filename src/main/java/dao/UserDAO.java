@@ -7,13 +7,10 @@ package dao;
 
 import model.User;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 /**
@@ -21,21 +18,19 @@ import javax.sql.DataSource;
  * @author nguyencongluat
  */
 public class UserDAO {
-    private final String jdbcURL = "jdbc:mysql://db:3306/db_17?useSSL=false";
-    private final String jdbcUsername = "root";
-    private final String jdbcPassword = "test123";
-    
-    @Resource(name = "jdbc/db_17")
-    private DataSource dataSource;
 
+    private DataSource dataSource;
+    private Connection connection = null;
     private static final String SELECT_USER_BY_ID = "select username,password from user where username = ?";
 
-    public UserDAO() {}
+    public UserDAO(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
-    public Connection getConnection() throws SQLException {
-        Connection connection;
-        connection = dataSource.getConnection();
-        return connection;
+    private void getConnection() throws SQLException, NamingException {
+        if (connection == null) {
+            connection = this.dataSource.getConnection();
+        }
     }
 
     /**
@@ -43,11 +38,14 @@ public class UserDAO {
      * @param username
      * @return
      * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
+     * @throws javax.naming.NamingException
      */
-    public User selectUser(String username) throws ClassNotFoundException {
+    public User selectUser(String username) throws ClassNotFoundException, SQLException, NamingException {
         User user = null;
+        getConnection();
         // Step 1: Establishing a Connection
-        try (Connection connection = getConnection();
+        try (
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);) {
             preparedStatement.setString(1, username);

@@ -1,0 +1,8 @@
+com/java/ex1/JAXRSConfiguration.class
+dao/UserDAO.class
+com/java/ex1/resources/JavaEE8Resource.class
+model/Book.class
+model/User.class
+controller/UserServlet.class
+dao/BookDAO.class
+controller/BookServlet.class
